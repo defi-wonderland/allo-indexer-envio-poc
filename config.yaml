@@ -1,0 +1,226 @@
+name: Allo Indexer
+unordered_multichain_mode: true
+
+##########################
+#       CONTRACTS        #
+##########################
+contracts:
+- name: Allo
+  handler: src/handlers/Allo.ts
+  events:
+  - event: BaseFeeUpdated(uint256 baseFee)
+  - event: Initialized(uint8 version)
+  - event: TreasuryUpdated(address treasury)
+
+- name: Registry
+  handler: src/handlers/Registry.ts
+  events:
+  - event: ProfileCreated(bytes32 indexed profileId, uint256 nonce, string name, (uint256,string) metadata, address owner, address anchor)
+  - event: ProfileMetadataUpdated(bytes32 indexed profileId, (uint256,string) metadata)
+
+##########################
+#        NETWORKS        #
+##########################
+networks:
+
+- id: 1 # mainnet
+  start_block: 18486688
+  contracts:
+  - name: Registry
+    address:
+    - 0x4AAcca72145e1dF2aeC137E1f3C5E3D75DB8b5f3
+  - name: Allo
+    address:
+    - 0x1133eA7Af70876e64665ecD07C0A0476d09465a1
+
+- id: 10 # optimism
+  start_block: 111678968
+  contracts:
+  - name: Registry
+    address:
+    - 0x4AAcca72145e1dF2aeC137E1f3C5E3D75DB8b5f3
+  - name: Allo
+    address:
+    - 0x1133eA7Af70876e64665ecD07C0A0476d09465a1
+
+- id: 11155111 # sepolia
+  start_block: 4617051
+  contracts:
+  - name: Registry
+    address:
+    - 0x4AAcca72145e1dF2aeC137E1f3C5E3D75DB8b5f3
+  - name: Allo
+    address:
+    - 0x1133eA7Af70876e64665ecD07C0A0476d09465a1
+
+- id: 250 # fantom
+  start_block: 77624278
+  contracts:
+  - name: Registry
+    address:
+    - 0x4AAcca72145e1dF2aeC137E1f3C5E3D75DB8b5f3
+  - name: Allo
+    address:
+    - 0x1133eA7Af70876e64665ecD07C0A0476d09465a1
+
+- id: 42161 # arbitrum
+  start_block: 146489425
+  contracts:
+  - name: Registry
+    address:
+    - 0x4AAcca72145e1dF2aeC137E1f3C5E3D75DB8b5f3
+  - name: Allo
+    address:
+    - 0x1133eA7Af70876e64665ecD07C0A0476d09465a1
+
+# - id: 80001 # polygon-mumbai
+#   start_block: 41939383
+#   contracts:
+#   - name: Registry
+#     address:
+#     - 0x4AAcca72145e1dF2aeC137E1f3C5E3D75DB8b5f3
+#   - name: Allo
+#     address:
+#     - 0x1133eA7Af70876e64665ecD07C0A0476d09465a1
+
+- id: 137 # polygon
+  start_block: 49466006
+  contracts:
+  - name: Registry
+    address:
+    - 0x4AAcca72145e1dF2aeC137E1f3C5E3D75DB8b5f3
+  - name: Allo
+    address:
+    - 0x1133eA7Af70876e64665ecD07C0A0476d09465a1
+
+- id: 8453 # base
+  start_block: 6083365
+  contracts:
+  - name: Registry
+    address:
+    - 0x4AAcca72145e1dF2aeC137E1f3C5E3D75DB8b5f3
+  - name: Allo
+    address:
+    - 0x1133eA7Af70876e64665ecD07C0A0476d09465a1
+
+- id: 324 # zksync-era-mainnet
+  start_block: 31154341
+  contracts:
+  - name: Registry
+    address:
+    - 0xaa376Ef759c1f5A8b0B5a1e2FEC5C23f3bF30246
+  - name: Allo
+    address:
+    - 0x9D1D1BF2835935C291C0f5228c86d5C4e235A249
+
+# - id: 300 # zksync-era-testnet
+#   rpc_config:
+#     url: https://sepolia.era.zksync.dev
+#   start_block: 1573385
+#   contracts:
+#   - name: Registry
+#     address:
+#     - 0xaa376Ef759c1f5A8b0B5a1e2FEC5C23f3bF30246
+#   - name: Allo
+#     address:
+#     - 0x9D1D1BF2835935C291C0f5228c86d5C4e235A249
+
+- id: 43114 # avalanche
+  start_block: 34540051
+  contracts:
+  - name: Registry
+    address:
+    - 0x4AAcca72145e1dF2aeC137E1f3C5E3D75DB8b5f3
+  - name: Allo
+    address:
+    - 0x1133eA7Af70876e64665ecD07C0A0476d09465a1
+
+# - id: 43113 # avalanche-fuji
+#   rpc_config:
+#     url: https://rpc.ankr.com/avalanche_fuji
+#   start_block: 25380385
+#   contracts:
+#   - name: Registry
+#     address:
+#     - 0x4AAcca72145e1dF2aeC137E1f3C5E3D75DB8b5f3
+#   - name: Allo
+#     address:
+#     - 0x1133eA7Af70876e64665ecD07C0A0476d09465a1
+
+- id: 534352 # scroll
+  start_block: 2683205
+  contracts:
+  - name: Registry
+    address:
+    - 0x4AAcca72145e1dF2aeC137E1f3C5E3D75DB8b5f3
+  - name: Allo
+    address:
+    - 0x1133eA7Af70876e64665ecD07C0A0476d09465a1
+
+# - id: 713715 # sei-devnet
+#   rpc_config:
+#     url: https://evm-rpc.arctic-1.seinetwork.io
+#   start_block: 14660337
+#   contracts:
+#   - name: Registry
+#     address:
+#     - 0x4AAcca72145e1dF2aeC137E1f3C5E3D75DB8b5f3
+#   - name: Allo
+#     address:
+#     - 0x1133eA7Af70876e64665ecD07C0A0476d09465a1
+
+# - id: 1329 # sei-mainnet
+#   rpc_config:
+#     url: https://evm-rpc.sei-apis.com
+#   start_block: 78000000
+#   contracts:
+#   - name: Registry
+#     address:
+#     - 0x4AAcca72145e1dF2aeC137E1f3C5E3D75DB8b5f3
+#   - name: Allo
+#     address:
+#     - 0x1133eA7Af70876e64665ecD07C0A0476d09465a1
+
+- id: 42 # lukso-mainnet
+  start_block: 2400000
+  contracts:
+  - name: Registry
+    address:
+    - 0x4AAcca72145e1dF2aeC137E1f3C5E3D75DB8b5f3
+  - name: Allo
+    address:
+    - 0x1133eA7Af70876e64665ecD07C0A0476d09465a1
+
+- id: 4201 # lukso-testnet
+  rpc_config:
+    url: https://rpc.testnet.lukso.network
+  start_block: 2500000
+  contracts:
+  - name: Registry
+    address:
+    - 0x4AAcca72145e1dF2aeC137E1f3C5E3D75DB8b5f3
+  - name: Allo
+    address:
+    - 0x1133eA7Af70876e64665ecD07C0A0476d09465a1
+
+- id: 42220 # celo-mainnet
+  start_block: 22257475
+  contracts:
+  - name: Registry
+    address:
+    - 0x4AAcca72145e1dF2aeC137E1f3C5E3D75DB8b5f3
+  - name: Allo
+    address:
+    - 0x1133eA7Af70876e64665ecD07C0A0476d09465a1
+
+# - id: 44787 # celo-testnet
+#   rpc_config:
+#     url: https://alfajores-forno.celo-testnet.org
+#   start_block: 23061115
+#   contracts:
+#   - name: Registry
+#     address:
+#     - 0x4AAcca72145e1dF2aeC137E1f3C5E3D75DB8b5f3
+#   - name: Allo
+#     address:
+#     - 0x1133eA7Af70876e64665ecD07C0A0476d09465a1
