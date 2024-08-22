@@ -1,33 +1,31 @@
-type Allo_BaseFeeUpdated {
+type Allocated {
   id: ID!
-  baseFee: BigInt!
+  blockNumber: BigInt! @index
+  logIndex: BigInt!
+  recipientId: String! @index
+  amount: BigInt!
+  token: String!
+  sender: String!
 }
 
-type Allo_Initialized {
+type AllocatedWithOrigin {
   id: ID!
-  version: BigInt!
+  blockNumber: BigInt! @index
+  logIndex: BigInt!
+  recipientId: String! @index
+  amount: BigInt!
+  token: String!
+  sender: String!
+  origin: String!
 }
 
-type Allo_TreasuryUpdated {
+type DirectAllocated {
   id: ID!
-  treasury: String!
+  blockNumber: BigInt! @index
+  logIndex: BigInt!
+  profileId: String! @index
+  profileOwner: String!
+  amount: BigInt!
+  token: String!
+  sender: String!
 }
-
-type Registry_ProfileCreated {
-  id: ID!
-  profileId: String!
-  nonce: BigInt!
-  name: String!
-  metadata_0: BigInt!
-  metadata_1: String!
-  owner: String!
-  anchor: String!
-}
-
-type Registry_ProfileMetadataUpdated {
-  id: ID!
-  profileId: String!
-  metadata_0: BigInt!
-  metadata_1: String!
-}
-
