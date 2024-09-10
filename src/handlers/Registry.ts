@@ -1,34 +1,72 @@
-// /*
-//  * Please refer to https://docs.envio.dev for a thorough guide on all Envio indexer features
-//  */
-// import {
-//   RegistryContract,
-//   Registry_ProfileCreatedEntity,
-//   Registry_ProfileMetadataUpdatedEntity,
-// } from "generated";
+import { generateEventId } from "../utils";
+import {
+    Registry,
+  } from "generated";
 
-// RegistryContract.ProfileCreated.handler(({ event, context }) => {
-//   const entity: Registry_ProfileCreatedEntity = {
-//     id: `${event.transactionHash}_${event.logIndex}`,
-//     profileId: event.params.profileId,
-//     nonce: event.params.nonce,
-//     name: event.params.name,
-//     metadata_0: event.params.metadata[0],
-//     metadata_1: event.params.metadata[1],
-//     owner: event.params.owner,
-//     anchor: event.params.anchor,
-//   };
 
-//   context.Registry_ProfileCreated.set(entity);
-// });
+// Handler for ProfileCreated event
+Registry.ProfileCreated.handler(async ({ event, context }) => {
+  const id = generateEventId(event);
+  console.debug('ProfileCreated', event.params);
+  context.Metadata.set({id, protocol: event.params.metadata[0], pointer: event.params.metadata[1]})
+  context.ProfileCreated.set({
+    id,
+    blockNumber: event.block.number,
+    timestamp: event.block.timestamp,
+    logIndex: event.logIndex,
+    srcAddress: event.srcAddress,
+    profileId: event.params.profileId,
+    nonce: event.params.nonce,
+    name: event.params.name,
+    metadata_id: id,
+    owner: event.params.owner,
+    anchor: event.params.anchor
+  });
+});
 
-// RegistryContract.ProfileMetadataUpdated.handler(({ event, context }) => {
-//   const entity: Registry_ProfileMetadataUpdatedEntity = {
-//     id: `${event.transactionHash}_${event.logIndex}`,
-//     profileId: event.params.profileId,
-//     metadata_0: event.params.metadata[0],
-//     metadata_1: event.params.metadata[1],
-//   };
+// Handler for ProfileMetadataUpdated event
+Registry.ProfileMetadataUpdated.handler(async ({ event, context }) => {
+  const id = generateEventId(event);
+  console.debug('ProfileMetadataUpdated', event.params);
+  context.Metadata.set({id, protocol: event.params.metadata[0], pointer: event.params.metadata[1]});
+  context.ProfileMetadataUpdated.set({
+    id,
+    blockNumber: event.block.number,
+    timestamp: event.block.timestamp,
+    logIndex: event.logIndex,
+    srcAddress: event.srcAddress,
+    profileId: event.params.profileId,
+    metadata_id: id
+  });
+});
 
-//   context.Registry_ProfileMetadataUpdated.set(entity);
-// });
+// Handler for ProfileNameUpdated event
+Registry.ProfileNameUpdated.handler(async ({ event, context }) => {
+  const id = generateEventId(event);
+  console.debug('ProfileNameUpdated', event.params);
+  context.ProfileNameUpdated.set({
+    id,
+    blockNumber: event.block.number,
+    timestamp: event.block.timestamp,
+    logIndex: event.logIndex,
+    srcAddress: event.srcAddress,
+    profileId: event.params.profileId,
+    name: event.params.name,
+    anchor: event.params.anchor
+  });
+});
+
+// Handler for ProfileOwnerUpdated event
+Registry.ProfileOwnerUpdated.handler(async ({ event, context }) => {
+  const id = generateEventId(event);
+  console.debug('ProfileOwnerUpdated', event.params);
+  context.ProfileOwnerUpdated.set({
+    id,
+    blockNumber: event.block.number,
+    timestamp: event.block.timestamp,
+    logIndex: event.logIndex,
+    srcAddress: event.srcAddress,
+    profileId: event.params.profileId,
+    owner: event.params.owner
+  });
+});

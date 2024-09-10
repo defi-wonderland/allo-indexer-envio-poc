@@ -1,48 +1,41 @@
-/*
- * Please refer to https://docs.envio.dev for a thorough guide on all Envio indexer features
- */
+// /*
+//  * Please refer to https://docs.envio.dev for a thorough guide on all Envio indexer features
+//  */
 import {
   Allo,
-  // Allo_BaseFeeUpdatedEntity,
-  // Allo_InitializedEntity,
-  // Allo_TreasuryUpdatedEntity,
 } from "generated";
+import { generateEventId } from "../utils";
 
 Allo.PoolCreated.contractRegister(({ event, context }) => {
-  console.debug('PoolCreated', event.params.strategy);
+  console.debug('PoolCreated', event);
+  
   context.addGeneralStrategy(event.params.strategy);
 });
 
+Allo.PoolCreated.handler(async ({ event, context }) => {
+  const id = generateEventId(event);
+  console.debug('PoolCreated', event.params);
+  context.Metadata.set({id, protocol: event.params.metadata[0], pointer: event.params.metadata[1]})
+  context.PoolCreated.set({id, ...event.params, metadata_id: id, blockNumber: event.block.number, logIndex: event.logIndex,     srcAddress: event.srcAddress, timestamp: event.block.timestamp});
+});
 
-// Allo.PoolCreated.handler(async ({ event, context }) => {
-//   console.log('found PoolCreated event');
-// });
+Allo.PoolMetadataUpdated.handler(async ({ event, context }) => {
+  const id = generateEventId(event);
+  context.Metadata.set({id, protocol: event.params.metadata[0], pointer: event.params.metadata[1]})
+  context.PoolMetadataUpdated.set({id, ...event.params, metadata_id: id, blockNumber: event.block.number, logIndex: event.logIndex,     srcAddress: event.srcAddress, timestamp: event.block.timestamp});
+});
 
+Allo.PoolFunded.handler(async ({ event, context }) => {
+  const id = generateEventId(event);
+  context.PoolFunded.set({id, ...event.params, blockNumber: event.block.number, logIndex: event.logIndex,     srcAddress: event.srcAddress, timestamp: event.block.timestamp});
+});
 
+Allo.RoleGranted.handler(async ({ event, context }) => {
+  const id = generateEventId(event);
+  context.RoleGranted.set({id, ...event.params, blockNumber: event.block.number, logIndex: event.logIndex,     srcAddress: event.srcAddress, timestamp: event.block.timestamp});
+});
 
-// AlloContract.BaseFeeUpdated.handler(({ event, context }) => {
-//   const entity: Allo_BaseFeeUpdatedEntity = {
-//     id: `${event.transactionHash}_${event.logIndex}`,
-//     baseFee: event.params.baseFee,
-//   };
-
-//   context.Allo_BaseFeeUpdated.set(entity);
-// });
-
-// AlloContract.Initialized.handler(({ event, context }) => {
-//   const entity: Allo_InitializedEntity = {
-//     id: `${event.transactionHash}_${event.logIndex}`,
-//     version: event.params.version,
-//   };
-
-//   context.Allo_Initialized.set(entity);
-// });
-
-// AlloContract.TreasuryUpdated.handler(({ event, context }) => {
-//   const entity: Allo_TreasuryUpdatedEntity = {
-//     id: `${event.transactionHash}_${event.logIndex}`,
-//     treasury: event.params.treasury,
-//   };
-
-//   context.Allo_TreasuryUpdated.set(entity);
-// });
+Allo.RoleRevoked.handler(async ({ event, context }) => {
+  const id = generateEventId(event);
+  context.RoleRevoked.set({id, ...event.params, blockNumber: event.block.number, logIndex: event.logIndex,     srcAddress: event.srcAddress, timestamp: event.block.timestamp});
+});

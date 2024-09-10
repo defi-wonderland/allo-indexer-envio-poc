@@ -1,31 +1,363 @@
-type Allocated {
+type Metadata {
   id: ID!
-  blockNumber: BigInt! @index
-  logIndex: BigInt!
-  recipientId: String! @index
-  amount: BigInt!
+  protocol: BigInt!
+  pointer: String!
+}
+
+
+##########################
+#       Allo Core        #
+##########################
+type PoolCreated {
+  id: ID!
+  blockNumber: Int! @index
+  timestamp: Int!
+  logIndex: Int!
+  srcAddress: String!
+  poolId: BigInt!
+  profileId: String!
+  strategy: String!
   token: String!
+  amount: BigInt!
+  metadata: Metadata!
+}
+
+type PoolMetadataUpdated {
+  id: ID!
+  blockNumber: Int! @index
+  timestamp: Int!
+  logIndex: Int!
+  srcAddress: String!
+  poolId: BigInt!
+  metadata: Metadata!
+}
+
+type PoolFunded {
+  id: ID!
+  blockNumber: Int! @index
+  timestamp: Int!
+  logIndex: Int!
+  srcAddress: String!
+  poolId: BigInt!
+  amount: BigInt!
+  fee: BigInt!
+}
+
+type RoleGranted {
+  id: ID!
+  blockNumber: Int! @index
+  timestamp: Int!
+  logIndex: Int!
+  srcAddress: String!
+  roleId: BigInt!
+  account: String!
+  delay: BigInt!
+  since: BigInt!
+  newMember: Boolean!
+}
+
+type RoleRevoked {
+  id: ID!
+  blockNumber: Int! @index
+  timestamp: Int!
+  logIndex: Int!
+  srcAddress: String!
+  roleId: BigInt!
+  account: String!
+}
+
+##########################
+#      Allo Registry     #
+##########################
+
+
+type ProfileCreated {
+  id: ID!
+  blockNumber: Int! @index
+  timestamp: Int!
+  logIndex: Int!
+  srcAddress: String!
+  profileId: String!
+  nonce: BigInt!
+  name: String!
+  metadata: Metadata!
+  owner: String!
+  anchor: String!
+}
+
+type ProfileMetadataUpdated {
+  id: ID!
+  blockNumber: Int! @index
+  timestamp: Int!
+  logIndex: Int!
+  srcAddress: String!
+  profileId: String!
+  metadata: Metadata!
+}
+
+type ProfileNameUpdated {
+  id: ID!
+  blockNumber: Int! @index
+  timestamp: Int!
+  logIndex: Int!
+  srcAddress: String!
+  profileId: String!
+  name: String!
+  anchor: String!
+}
+
+type ProfileOwnerUpdated {
+  id: ID!
+  blockNumber: Int! @index
+  timestamp: Int!
+  logIndex: Int!
+  srcAddress: String!
+  profileId: String!
+  owner: String!
+}
+
+##########################
+#      Allo Strategy     #
+##########################
+
+### Registered ###
+type RegisteredWithSender {
+  id: ID!
+  blockNumber: Int! @index
+  timestamp: Int!
+  logIndex: Int!
+  srcAddress: String!
+  recipientId: String!
+  data: Bytes!
   sender: String!
 }
 
+type RegisteredWithData {
+  id: ID!
+  blockNumber: Int! @index
+  timestamp: Int!
+  logIndex: Int!
+  srcAddress: String!
+  recipient: String!
+  data: Bytes!
+}
+
+### TimestampsUpdated ###
+type TimestampsUpdatedWithRegistrationAndAllocation {
+  id: ID!
+  blockNumber: Int! @index
+  timestamp: Int!
+  logIndex: Int!
+  srcAddress: String!
+  registrationStartTime: BigInt!
+  registrationEndTime: BigInt!
+  allocationStartTime: BigInt!
+  allocationEndTime: BigInt!
+  sender: String!
+}
+
+type TimestampsUpdatedWithRegistration {
+  id: ID!
+  blockNumber: Int! @index
+  timestamp: Int!
+  logIndex: Int!
+  srcAddress: String!
+  registrationStartTime: BigInt!
+  registrationEndTime: BigInt!
+  sender: String!
+}
+
+type TimestampsUpdatedWithAllocation {
+  id: ID!
+  blockNumber: Int! @index
+  timestamp: Int!
+  logIndex: Int!
+  srcAddress: String!
+  allocationStartTime: BigInt!
+  allocationEndTime: BigInt!
+  sender: String!
+}
+
+### DistrubutionUpdated ###
+
+type DistributionUpdated {
+  id: ID!
+  blockNumber: Int! @index
+  timestamp: Int!
+  logIndex: Int!
+  srcAddress: String!
+  merkleRoot: Bytes!
+  metadata: Metadata!
+}
+
+### FundsDistributed ###
+type FundsDistributed {
+  id: ID!
+  blockNumber: Int! @index
+  timestamp: Int!
+  logIndex: Int!
+  srcAddress: String!
+  amount: BigInt!
+  grantee: String!
+  token: String!
+  recipientId: String!
+}
+
+### Distributed ###
+type DistributedWithRecipientAddress {
+  id: ID!
+  blockNumber: Int! @index
+  timestamp: Int!
+  logIndex: Int!
+  srcAddress: String!
+  recipientId: String!
+  recipientAddress: String!
+  amount: BigInt!
+  sender: String!
+}
+
+type DistributedWithData {
+  id: ID!
+  blockNumber: Int! @index
+  timestamp: Int!
+  logIndex: Int!
+  srcAddress: String!
+  recipient: String!
+  data: Bytes!
+}
+
+type DistributedWithFlowRate {
+  id: ID!
+  blockNumber: Int! @index
+  timestamp: Int!
+  logIndex: Int!
+  srcAddress: String!
+  sender: String!
+  flowRate: BigInt!
+}
+
+### Allocated ###
 type AllocatedWithOrigin {
   id: ID!
-  blockNumber: BigInt! @index
-  logIndex: BigInt!
-  recipientId: String! @index
+  blockNumber: Int! @index
+  timestamp: Int!
+  logIndex: Int!
+  srcAddress: String!
+  recipientId: String!
   amount: BigInt!
   token: String!
   sender: String!
   origin: String!
 }
 
-type DirectAllocated {
+type AllocatedWithData {
   id: ID!
-  blockNumber: BigInt! @index
-  logIndex: BigInt!
-  profileId: String! @index
-  profileOwner: String!
+  blockNumber: Int! @index
+  timestamp: Int!
+  logIndex: Int!
+  srcAddress: String!
+  recipientId: String!
+  sender: String!
+  amount: BigInt!
+  data: Bytes!
+}
+
+type AllocatedWithToken {
+  id: ID!
+  blockNumber: Int! @index
+  timestamp: Int!
+  logIndex: Int!
+  srcAddress: String!
+  recipientId: String!
   amount: BigInt!
   token: String!
   sender: String!
 }
+
+type AllocatedWithVotes {
+  id: ID!
+  blockNumber: Int! @index
+  timestamp: Int!
+  logIndex: Int!
+  srcAddress: String!
+  recipientId: String!
+  votes: BigInt!
+  allocator: String!
+}
+
+type AllocatedWithStatus {
+  id: ID!
+  blockNumber: Int! @index
+  timestamp: Int!
+  logIndex: Int!
+  srcAddress: String!
+  recipientId: String!
+  status: BigInt!
+  sender: String!
+}
+
+### AllocatedWithNft ###
+type AllocatedWithNft {
+  id: ID!
+  blockNumber: Int! @index
+  timestamp: Int!
+  logIndex: Int!
+  srcAddress: String!
+  recipientId: String!
+  votes: BigInt!
+  nft: String!
+  allocator: String!
+}
+
+### DirectAllocated ###
+type DirectAllocated {
+  id: ID!
+  blockNumber: Int! @index
+  timestamp: Int!
+  logIndex: Int!
+  srcAddress: String!
+  recipient: String!
+  amount: BigInt!
+  token: String!
+  sender: String!
+}
+
+### RecipientStatusUpdated ###
+type RecipientStatusUpdatedWithApplicationId {
+  id: ID!
+  blockNumber: Int! @index
+  timestamp: Int!
+  logIndex: Int!
+  srcAddress: String!
+  recipientId: String!
+  applicationId: BigInt!
+  status: BigInt!
+  sender: String!
+}
+
+type RecipientStatusUpdatedWithRecipientStatus {
+  id: ID!
+  blockNumber: Int! @index
+  timestamp: Int!
+  logIndex: Int!
+  srcAddress: String!
+  recipientId: String!
+  recipientStatus: BigInt!
+  sender: String!
+}
+
+type RecipientStatusUpdatedWithFullRow {
+  id: ID!
+  blockNumber: Int! @index
+  timestamp: Int!
+  logIndex: Int!
+  srcAddress: String!
+  rowIndex: BigInt!
+  fullRow: BigInt!
+  sender: String!
+}
+
+
+
+
+
