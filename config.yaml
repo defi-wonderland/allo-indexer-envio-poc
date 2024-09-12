@@ -1,6 +1,8 @@
 name: Allo Indexer
-unordered_multichain_mode: true
+unordered_multichain_mode: false
 raw_events: true
+rollback_on_reorg: false
+
 ##########################
 #       CONTRACTS        #
 ##########################
@@ -225,8 +227,11 @@ networks:
 
 - id: 1329 # sei-mainnet
   rpc_config:
-    url: https://evm-rpc.sei-apis.com
-  start_block: 78000000
+    url: 
+    - https://evm-rpc.sei-apis.com
+    - https://rpc.pacific-1.sei.io/
+    - https://sei-rpc.publicnode.com:443
+  start_block: 82529999
   contracts:
   - name: Registry
     address:

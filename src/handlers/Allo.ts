@@ -5,16 +5,23 @@ import {
   Allo,
 } from "generated";
 import { generateEventId } from "../utils";
-
+// import { getProviders } from "../providers";
+/**
+ * Registers new strategy contract dynamically
+ */
 Allo.PoolCreated.contractRegister(({ event, context }) => {
-  console.debug('PoolCreated', event);
-  
   context.addGeneralStrategy(event.params.strategy);
 });
 
+/**
+ * Expample usage of providers
+ */
 Allo.PoolCreated.handler(async ({ event, context }) => {
+  //const providers = getProviders();
+  //providers.pricing.getPrice()
+  //providers.metadata.getMetadata()
+  //providers.repository.save()
   const id = generateEventId(event);
-  console.debug('PoolCreated', event.params);
   context.Metadata.set({id, protocol: event.params.metadata[0], pointer: event.params.metadata[1]})
   context.PoolCreated.set({id, ...event.params, metadata_id: id, blockNumber: event.block.number, logIndex: event.logIndex,     srcAddress: event.srcAddress, timestamp: event.block.timestamp});
 });

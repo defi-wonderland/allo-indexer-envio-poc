@@ -156,25 +156,14 @@ type TimestampsUpdatedWithRegistrationAndAllocation {
   sender: String!
 }
 
-type TimestampsUpdatedWithRegistration {
+type TimestampsUpdated {
   id: ID!
   blockNumber: Int! @index
   timestamp: Int!
   logIndex: Int!
   srcAddress: String!
-  registrationStartTime: BigInt!
-  registrationEndTime: BigInt!
-  sender: String!
-}
-
-type TimestampsUpdatedWithAllocation {
-  id: ID!
-  blockNumber: Int! @index
-  timestamp: Int!
-  logIndex: Int!
-  srcAddress: String!
-  allocationStartTime: BigInt!
-  allocationEndTime: BigInt!
+  startTime: BigInt!
+  endTime: BigInt!
   sender: String!
 }
 
